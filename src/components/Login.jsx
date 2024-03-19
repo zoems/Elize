@@ -1,34 +1,39 @@
-import { useState } from 'react'
+import React, { useState } from "react";
+import useLogin from "../hooks/useLogin";
 
-function Login(props) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+const Login = () => {
+  const { handleLogin, handleLogout, authenticated } = useLogin();
+  const [inputPassword, setInputPassword] = useState('');
 
-  function handleLogin(e) {
-      e.preventDefault()
-      // Code to handle login goes here
-      props.toggle()
-  }
+  const handleChange = (event) => {
+    setInputPassword(event.target.value);
+  };
 
   return (
-      <div className="popup">
-          <div className="popup-inner">
-              <h2>Login</h2>
-              <form onSubmit={handleLogin}>
-                  <label>
-                      Username:
-                      <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-                  </label>
-                  <label>
-                      Password:
-                      <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-                  </label>
-                  <button type="submit">Login</button>
-              </form>
-              <button onClick={props.toggle}>Close</button>
-          </div>
-      </div>
-  )
-}
+    <div>
+      {authenticated ? (
+        <div>
+          <p>Welcome! the page is {authenticated}.</p>
+          <button onClick={handleLogout()}>Logout</button>
+        </div>
+      ) : (
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleLogin(inputPassword);
+          }}
+        >
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={inputPassword}
+            onChange={handleChange}
+          />
+          <button type="submit">Login</button>
+        </form>
+      )}
+    </div>
+  );
+};
 
-export default Login
+export default Login;
