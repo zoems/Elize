@@ -1,9 +1,6 @@
 import styles from "./style"
 
-import { Home } from './pages';
-
-import { Navbar, Footer } from "./components"
-import Login from "./components/Login"
+import { Navbar, Footer, Login } from "./components"
 
 
 const App = () => (
