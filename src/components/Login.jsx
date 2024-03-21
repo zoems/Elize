@@ -9,20 +9,21 @@ const Login = () => {
     setInputPassword(event.target.value);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleLogin(inputPassword);
+    setInputPassword('');
+  };
+
   return (
     <div>
       {authenticated ? (
         <div>
           <p>Welcome! the page is {authenticated}.</p>
-          <button onClick={handleLogout()}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            handleLogin(inputPassword);
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <input
             type="password"
             placeholder="Enter password"
