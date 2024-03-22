@@ -1,34 +1,50 @@
-import { useState } from 'react'
+import React, { useState } from "react";
+import useLogin from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
+import styles from '../style'
 
-function Login(props) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+const Login = () => {
+  const { handleLogin, authenticated } = useLogin(); //handleLogout <button onClick={handleLogout}>Logout</button>
+  const [inputPassword, setInputPassword] = useState('');
+  const navigate = useNavigate();
 
-  function handleLogin(e) {
-      e.preventDefault()
-      // Code to handle login goes here
-      props.toggle()
-  }
+
+  const handleChange = (event) => {
+    setInputPassword(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleLogin(inputPassword);
+    setInputPassword('');
+  };
 
   return (
-      <div className="popup">
-          <div className="popup-inner">
-              <h2>Login</h2>
-              <form onSubmit={handleLogin}>
-                  <label>
-                      Username:
-                      <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-                  </label>
-                  <label>
-                      Password:
-                      <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-                  </label>
-                  <button type="submit">Login</button>
-              </form>
-              <button onClick={props.toggle}>Close</button>
-          </div>
-      </div>
-  )
-}
+    <div>
+      {authenticated ? (navigate("/home")
+      ) : (
+        <div className={`${styles.flexCenter}`}>
+          <form onSubmit={handleSubmit} className='absolute top-1/2 transform -translate-y-1/2 w-full max-w-sm'>
+            <div className="flex items-center border-b-2  border-white py-2">
+              <input
+                type="password"
+                placeholder="Enter Password"
+                aria-label="Enter Password"
+                value={inputPassword}
+                onChange={handleChange}
+                className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+              />
+              <button
+                className="flex-shrink-0 bg-white hover:bg-slate-700 border-white hover:border-slate-700 text-sm border-4 text-slate-700 hover:text-white py-1 px-2 rounded"
+                type="submit">
+                  Login
+                </button>
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+};
 
-export default Login
+export default Login;

@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 
-const PASSWORD = 'password'
+const PASSWORD = import.meta.env.VITE_APP_PAGE_PASSWORD || "ok";
 
 const useLogin = () => {
-  const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
 
-  const handleLogin = () => {
-    if (password === PASSWORD) {
+  const handleLogin = (inputPassword) => {
+    if (inputPassword === PASSWORD) {
       setAuthenticated(true);
+      console.log("Successful login with", inputPassword);
+
     } else {
-      alert('Incorrect password');
+      alert("Incorrect password");
+      console.log("Failed login");
+      console.log("This is the password:", PASSWORD);
     }
   };
 
   const handleLogout = () => {
     setAuthenticated(false);
-    setPassword('');
   };
 
-  return ( handleLogin, handleLogout, authenticated );
+
+  return { handleLogin, handleLogout, authenticated };
 };
 
 export default useLogin;

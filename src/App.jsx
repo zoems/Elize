@@ -1,46 +1,23 @@
-// import styles from "./style"
+import React from 'react';
 
-// import { Navbar, Footer, Hero } from "./components"
-import Login from "./components"
-// import useLogin from "./hooks/useLogin"
+import { Login } from "./components"
+import Home from "./pages/Home"
 
-import { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import useLogin from './hooks/useLogin';
 
 const App = () => {
-  const [seen, setSeen] = useState(false)
+  const { authenticated } = useLogin();
 
-  function togglePop () {
-      setSeen(!seen);
-  }
+return (
 
-  return (
-      <div>
-          <button onClick={togglePop}>Login</button>
-          {seen ? <Login toggle={togglePop} /> : null}
-      </div>
-  )
-}
-// (
-  // <div className={`w-full h-full overflow-hidden`} >
-  //   <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-  //     <div className={`${styles.boxWidth}`}>
-  //       <Navbar />
-  //     </div>
-  //   </div>
-
-  //   <div className={`bg-primary ${styles.flexStart}`}>
-  //     <div className={`${styles.boxWidth}`}>
-  //       <Hero />
-  //     </div>
-  //   </div>
-
-  //   <div className={`bg-primary ${styles.paddingX} ${styles.flexStart}`}>
-  //     <div className={`${styles.boxWidth}`}>
-  //       <Footer />
-  //     </div>
-  //   </div>
-  // </div>
-// )
+  <Router>
+    <Routes>
+      <Route path="/" element={authenticated ? <Home /> : <Login />}/>
+      <Route path="/home" element={<Home />} />
+    </Routes>
+  </Router>
+)}
 
 
 export default App
