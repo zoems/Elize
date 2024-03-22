@@ -1,29 +1,23 @@
-import styles from "./style"
+import React from 'react';
 
-import { Navbar, Footer, Login } from "./components"
+import { Login } from "./components"
+import Home from "./pages/Home"
 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import useLogin from './hooks/useLogin';
 
-const App = () => (
-  <div className={`w-full h-full overflow-hidden`} >
-    <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-      <div className={`${styles.boxWidth}`}>
-        <Navbar />
-        <div className={`bg-primary ${styles.flexStart}`}>
-          <div className={`${styles.boxWidth}`}>
-            <Login />
-          </div>
-        </div>
-      </div>
-    </div>
+const App = () => {
+  const { authenticated } = useLogin();
 
+return (
 
-    <div className={`bg-primary hidden ${styles.paddingX} ${styles.flexStart}`}>
-      <div className={`${styles.boxWidth}`}>
-        <Footer />
-      </div>
-    </div>
-  </div>
-)
+  <Router>
+    <Routes>
+      <Route path="/" element={authenticated ? <Home /> : <Login />}/>
+      <Route path="/home" element={<Home />} />
+    </Routes>
+  </Router>
+)}
 
 
 export default App
