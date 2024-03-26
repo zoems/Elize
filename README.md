@@ -3,6 +3,6 @@
 request the password to enter
 
 # Setup
-Node. JS | Vite | Javascript | Tailwind
+Node.JS | Vite | Javascript | Tailwind
 <br/>
 Hosted with AWS Amplify
